@@ -9,6 +9,7 @@ import Add from "./lab3/Add";
 import Login from "./lab3/Login";
 import Register from "./lab3/Register";
 import StoryForm from "./pages/lab4";
+import { StoryList } from "./pages/lab5";
 
 const queryClient = new QueryClient();
 
@@ -17,10 +18,11 @@ createRoot(document.getElementById("root")!).render(
     <BrowserRouter>
     <QueryClientProvider client={queryClient}>
       <Routes>
-        <Route path="/" element = {<StoryForm></StoryForm>}></Route>
-        {/* <Route path="/add" element = {<Add></Add>}></Route>
+        <Route path="/" element = {<App></App>}></Route>
+        <Route path="/list" element = {<StoryList></StoryList>}></Route>
+        <Route path="/add" element = {<Add></Add>}></Route>
         <Route path="/login" element = {<Login></Login>}></Route>
-        <Route path="/register" element = {<Register></Register>}></Route> */}
+        <Route path="/register" element = {<Register></Register>}></Route>
       </Routes>
       </QueryClientProvider>
     </BrowserRouter>
