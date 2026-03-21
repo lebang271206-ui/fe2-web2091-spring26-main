@@ -23,7 +23,7 @@ interface Story {
 function CategoryForm() {
   const { mutate, isPending, isSuccess } = useMutation({
     mutationFn: async (values: Category) => {
-      await axios.post("http://localhost:3000/categories", values);
+      await axios.post("http://localhost:3000/stories", values);
     },
     onSuccess: () => {
       toast.success("Category created successfully!");
@@ -72,7 +72,7 @@ export default function Lab4() {
   const { data: categories = [], isLoading: categoriesLoading } = useQuery({
     queryKey: ["categories"],
     queryFn: async () => {
-      const res = await axios.get("http://localhost:3000/categories");
+      const res = await axios.get("http://localhost:3000/stories");
       return res.data as Category[];
     },
   });
