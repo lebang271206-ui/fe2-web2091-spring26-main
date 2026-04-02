@@ -1,34 +1,58 @@
-import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
-import { Button } from "antd";
+import { Form, Input, Button, message } from "antd";
+import { useMutation } from "@tanstack/react-query";
+import axios from "axios";
+import { useAuthStore } from "../stores/useAuthStore";
 
 const Login = () => {
-  const context = useContext(UserContext);
-  if (!context) return null;
+  const { setAuth } = useAuthStore();
 
-  const { setUser } = context;
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (values: any) => {
+      return await axios.post("http://localhost:3000/login", values);
+    },
 
-  const handleLogin = () => {
-    setUser({
-      name: "banglv27",
-      avatar: "https://i.pravatar.cc/150",
-    });
-  };
+    onSuccess: ({ data }) => {
+      setAuth(data.user, data.accessToken);
+      message.success("Đăng nhập thành công!");
+    },
 
-  const handleLogout = () => {
-    setUser(null);
+    onError: () => {
+      message.error("Sai email hoặc password!");
+    },
+  });
+
+  const onFinish = (values: any) => {
+    mutate(values);
   };
 
   return (
-    <div style={{ padding: 20 }}>
-      <Button type="primary" onClick={handleLogin}>
-        Login
-      </Button>
+    <Form
+      layout="vertical"
+      onFinish={onFinish}
+      style={{ maxWidth: 400, margin: "50px auto" }}
+    >
+      <Form.Item
+        label="Email"
+        name="email"
+        rules={[{ required: true, message: "Nhập email!" }]}
+      >
+        <Input />
+      </Form.Item>
 
-      <Button danger onClick={handleLogout} style={{ marginLeft: 10 }}>
-        Logout
-      </Button>
-    </div>
+      <Form.Item
+        label="Password"
+        name="password"
+        rules={[{ required: true, message: "Nhập password!" }]}
+      >
+        <Input.Password />
+      </Form.Item>
+
+      <Form.Item>
+        <Button type="primary" htmlType="submit" loading={isPending} block>
+          Đăng nhập
+        </Button>
+      </Form.Item>
+    </Form>
   );
 };
 

@@ -1,22 +1,18 @@
-import { useContext } from "react";
-import { UserContext } from "../context/UserContext";
-import { Avatar } from "antd";
+import { useAuthStore } from "../stores/useAuthStore";
+
 
 const Header = () => {
-  const context = useContext(UserContext);
-  if (!context) return null;
-
-  const { user } = context;
+  const { user, logout } = useAuthStore();
 
   return (
-    <div style={{ display: "flex", gap: 10, padding: 20 }}>
+    <div>
       {user ? (
         <>
-          <Avatar src={user.avatar} />
-          <span>{user.name}</span>
+          <p>{user.email}</p>
+          <button onClick={logout}>Logout</button>
         </>
       ) : (
-        <span>Chưa đăng nhập</span>
+        <p>Chưa đăng nhập</p>
       )}
     </div>
   );
