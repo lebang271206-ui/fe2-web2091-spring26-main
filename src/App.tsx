@@ -35,7 +35,7 @@ function App() {
               Username: {user ? user.name : "Chưa đăng nhập"}
             </span>
 
-            <Link to="#" className="hover:text-gray-200">
+            <Link to="login" className="hover:text-gray-200">
               Đăng nhập
             </Link>
             <Link to="#" className="hover:text-gray-200">
